@@ -3,113 +3,177 @@
   <head>
     <meta charset="utf-8" />
     <title>Jev ToS Checker</title>
+    <link rel="stylesheet" href="base.css" />
     <style>
-      :root {
-        color-scheme: light dark;
-        --bg: #ffffff;
-        --fg: #1c1c1e;
-        --muted: #6b6b70;
-        --border: #e2e2e6;
-        --high: #d93036;
-        --high-bg: #fdecec;
-        --review: #a35c00;
-        --review-bg: #fff4e0;
-      }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #1c1c1e;
-          --fg: #f2f2f5;
-          --muted: #a0a0a8;
-          --border: #3a3a3e;
-          --high: #ff6b6f;
-          --high-bg: #3d1f20;
-          --review: #ffb74d;
-          --review-bg: #3a2c15;
-        }
-      }
       body {
         width: 380px;
-        margin: 0;
-        padding: 12px;
-        font: 13px/1.5 system-ui, sans-serif;
-        background: var(--bg);
-        color: var(--fg);
+        font-size: 13px;
+        line-height: 1.5;
       }
-      header { display: flex; justify-content: space-between; align-items: baseline; }
-      h1 { font-size: 15px; margin: 0 0 8px; }
-      .link {
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px 0;
+      }
+      h1 {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+      .icon-button {
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        margin-right: -6px;
         padding: 0;
-        font: inherit;
-        color: var(--muted);
+        color: var(--ink-muted);
         background: none;
         border: 0;
-        text-decoration: underline;
-        cursor: pointer;
-      }
-      #setup p { margin: 0 0 8px; }
-      #analyze, #setup .open-settings {
-        width: 100%;
-        padding: 8px;
-        font: inherit;
-        font-weight: 600;
-        border: 0;
         border-radius: 6px;
-        background: var(--fg);
-        color: var(--bg);
         cursor: pointer;
       }
-      [hidden] { display: none !important; }
-      #analyze:disabled { opacity: 0.5; cursor: progress; }
-      #status { color: var(--muted); margin: 8px 0; }
-      section { border-top: 1px solid var(--border); padding: 8px 0; }
-      h2 {
-        display: flex;
-        justify-content: space-between;
-        gap: 8px;
-        font-size: 13px;
-        margin: 0 0 4px;
+      .icon-button:hover { color: var(--ink); }
+
+      .intro {
+        padding: 12px 16px 16px;
+        border-bottom: 1px solid var(--rule);
       }
-      .summary { font-weight: normal; color: var(--muted); white-space: nowrap; }
-      ul { list-style: none; margin: 0; padding: 0; }
-      .finding {
+      .intro p {
+        margin: 0 0 12px;
+        color: var(--ink-muted);
+      }
+      .intro .primary { width: 100%; }
+      progress {
         display: block;
         width: 100%;
-        margin: 4px 0;
-        padding: 6px 8px;
-        text-align: left;
-        font: inherit;
-        color: inherit;
+        height: 2px;
+        margin-top: 12px;
+        appearance: none;
         border: 0;
-        border-left: 3px solid;
-        border-radius: 4px;
+        background: var(--rule);
+      }
+      progress::-webkit-progress-bar { background: var(--rule); }
+      progress::-webkit-progress-value { background: var(--ink); transition: width 0.2s; }
+
+      #summary {
+        margin: 0;
+        padding: 16px 16px 4px;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 1.4;
+        text-wrap: pretty;
+      }
+      #status {
+        margin: 0;
+        padding: 0 16px;
+        color: var(--ink-muted);
+      }
+      #status:empty { display: none; }
+      #status.error { color: var(--red-pen); padding-top: 12px; }
+
+      section { padding: 14px 16px 4px; }
+      h2 {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 0 0 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ink-muted);
+      }
+      .count { font-weight: 400; font-variant-numeric: tabular-nums; }
+
+      ul { list-style: none; margin: 0; padding: 0; }
+      /* 校正記号のように、左の余白に要注意は「!」、要確認は「?」を置く */
+      .clause {
+        display: grid;
+        grid-template-columns: 12px 1fr;
+        column-gap: 10px;
+        width: calc(100% + 16px);
+        margin: 0 -8px 2px;
+        padding: 6px 8px 8px;
+        text-align: left;
+        background: none;
+        border: 0;
+        border-radius: 6px;
         cursor: pointer;
       }
-      .finding.high { background: var(--high-bg); border-color: var(--high); }
-      .finding.review { background: var(--review-bg); border-color: var(--review); }
-      .badge { display: block; font-size: 11px; font-weight: 600; }
-      .high .badge { color: var(--high); }
-      .review .badge { color: var(--review); }
-      .text {
+      .clause::before {
+        grid-row: 1 / 3;
+        font-family: var(--font-text);
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.1;
+      }
+      .clause.high::before { content: "!" / ""; color: var(--red-pen); }
+      .clause.review::before { content: "?" / ""; color: var(--ochre); }
+      .clause > * { grid-column: 2; }
+      .clause:hover { background: color-mix(in srgb, var(--ink) 5%, transparent); }
+      .verdict {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 600;
+        margin-bottom: 2px;
+      }
+      .high .verdict { color: var(--red-pen); }
+      .review .verdict { color: var(--ink-muted); }
+      .likelihood { font-weight: 400; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+      .quote {
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        font-family: var(--font-text);
+        font-size: 13.5px;
+        line-height: 1.75;
       }
-      footer { color: var(--muted); font-size: 11px; margin-top: 8px; }
+
+      #clear {
+        margin: 8px 16px 0;
+        padding-top: 12px;
+        border-top: 1px solid var(--rule);
+        color: var(--ink-muted);
+      }
+      #clear strong { font-weight: 600; color: var(--ok); }
+
+      footer {
+        margin-top: 12px;
+        padding: 10px 16px 14px;
+        font-size: 11px;
+        color: var(--ink-muted);
+        border-top: 1px solid var(--rule);
+      }
     </style>
   </head>
   <body>
     <header>
       <h1 data-i18n="extName"></h1>
-      <button class="link open-settings" data-i18n="settingsLink"></button>
+      <button class="icon-button open-settings" data-i18n-title="settingsLink">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
     </header>
-    <div id="setup" hidden>
+
+    <div class="intro" id="setup" hidden>
       <p data-i18n="notConfigured"></p>
-      <button class="open-settings" data-i18n="openSettings"></button>
+      <button class="primary open-settings" data-i18n="openSettings"></button>
     </div>
-    <button id="analyze" data-i18n="analyzeButton" hidden></button>
-    <p id="status"></p>
+    <div class="intro" id="start" hidden>
+      <p id="hint" data-i18n="startHint"></p>
+      <button class="primary" id="analyze" data-i18n="analyzeButton"></button>
+      <progress id="progress" hidden></progress>
+    </div>
+
+    <p id="summary" hidden></p>
+    <p id="status" role="status"></p>
     <div id="results"></div>
+    <p id="clear" hidden></p>
+
     <footer data-i18n="disclaimer"></footer>
     <script src="dist/popup.js"></script>
   </body>

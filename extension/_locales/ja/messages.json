@@ -22,14 +22,6 @@
       }
     }
   },
-  "statusDone": {
-    "message": "$COUNT$ 条項を解析しました",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
   "notConfigured": {
     "message": "最初に接続設定をしてください。"
   },
@@ -44,20 +36,6 @@
   },
   "levelReview": {
     "message": "要確認"
-  },
-  "noIssues": {
-    "message": "問題未検出"
-  },
-  "summaryCounts": {
-    "message": "要注意 $HIGH$ / 要確認 $REVIEW$",
-    "placeholders": {
-      "high": {
-        "content": "$1"
-      },
-      "review": {
-        "content": "$2"
-      }
-    }
   },
   "disclaimer": {
     "message": "AI による自動判定です。法的助言ではありません。判定の確認には原文を参照してください。"
@@ -146,5 +124,38 @@
         "content": "$1"
       }
     }
+  },
+  "startHint": {
+    "message": "利用規約やプライバシーポリシーのページで実行すると、よく読んでおきたい条項に印を付けます。"
+  },
+  "summaryFound": {
+    "message": "$TOTAL$ 条項を読み、$COUNT$ 条項に印を付けました。",
+    "placeholders": {
+      "total": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "summaryNone": {
+    "message": "$TOTAL$ 条項を読みました。印を付ける条項はありませんでした。",
+    "placeholders": {
+      "total": {
+        "content": "$1"
+      }
+    }
+  },
+  "nothingFoundFor": {
+    "message": "該当なし:$LIST$",
+    "placeholders": {
+      "list": {
+        "content": "$1"
+      }
+    }
+  },
+  "listSeparator": {
+    "message": "、"
   }
 }

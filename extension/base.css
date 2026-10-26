@@ -1,0 +1,57 @@
+/* 紙・インク・赤ペン・黄土の4色で、規約を校閲しているような見た目にする */
+:root {
+  color-scheme: light dark;
+  --paper: #f7f8fa;
+  --ink: #1d2742;
+  --ink-muted: #5b6480;
+  --rule: #dadfe8;
+  --red-pen: #c62d3a;
+  --ochre: #b8860b;
+  --ok: #2d6a4f;
+
+  --font-ui: "Avenir Next", "Hiragino Sans", "Segoe UI Variable Text", "Yu Gothic UI", "Noto Sans JP", sans-serif;
+  --font-text: "Iowan Old Style", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #151a28;
+    --ink: #e7eaf2;
+    --ink-muted: #9aa3ba;
+    --rule: #2a3247;
+    --red-pen: #ff7380;
+    --ochre: #e0b84a;
+    --ok: #74c69d;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+[hidden] { display: none !important; }
+
+button { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.primary {
+  padding: 9px 16px;
+  font-weight: 600;
+  color: var(--paper);
+  background: var(--ink);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.primary:disabled { opacity: 0.45; cursor: progress; }

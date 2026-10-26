@@ -22,14 +22,6 @@
       }
     }
   },
-  "statusDone": {
-    "message": "Analyzed $COUNT$ clauses",
-    "placeholders": {
-      "count": {
-        "content": "$1"
-      }
-    }
-  },
   "notConfigured": {
     "message": "Set up a connection first."
   },
@@ -44,20 +36,6 @@
   },
   "levelReview": {
     "message": "Review"
-  },
-  "noIssues": {
-    "message": "No issues found"
-  },
-  "summaryCounts": {
-    "message": "Caution $HIGH$ / Review $REVIEW$",
-    "placeholders": {
-      "high": {
-        "content": "$1"
-      },
-      "review": {
-        "content": "$2"
-      }
-    }
   },
   "disclaimer": {
     "message": "Automated AI assessment, not legal advice. Check the original text to confirm each result."
@@ -146,5 +124,38 @@
         "content": "$1"
       }
     }
+  },
+  "startHint": {
+    "message": "Run this on a terms of service or privacy policy page to mark the clauses worth a closer look."
+  },
+  "summaryFound": {
+    "message": "Read $TOTAL$ clauses and marked $COUNT$.",
+    "placeholders": {
+      "total": {
+        "content": "$1"
+      },
+      "count": {
+        "content": "$2"
+      }
+    }
+  },
+  "summaryNone": {
+    "message": "Read $TOTAL$ clauses. None needed a mark.",
+    "placeholders": {
+      "total": {
+        "content": "$1"
+      }
+    }
+  },
+  "nothingFoundFor": {
+    "message": "Nothing found: $LIST$",
+    "placeholders": {
+      "list": {
+        "content": "$1"
+      }
+    }
+  },
+  "listSeparator": {
+    "message": ", "
   }
 }

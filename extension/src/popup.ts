@@ -5,42 +5,74 @@ import { localizePage, t } from "./i18n";
 import { extractClauses, revealClause } from "./page";
 import { loadSettings } from "./settings";
 
-const analyzeButton = document.getElementById("analyze") as HTMLButtonElement;
 const setupEl = document.getElementById("setup") as HTMLDivElement;
+const startEl = document.getElementById("start") as HTMLDivElement;
+const hintEl = document.getElementById("hint") as HTMLParagraphElement;
+const analyzeButton = document.getElementById("analyze") as HTMLButtonElement;
+const progressEl = document.getElementById("progress") as HTMLProgressElement;
+const summaryEl = document.getElementById("summary") as HTMLParagraphElement;
 const statusEl = document.getElementById("status") as HTMLParagraphElement;
 const resultsEl = document.getElementById("results") as HTMLDivElement;
+const clearEl = document.getElementById("clear") as HTMLParagraphElement;
 
 const categories = CATEGORIES.map(({ id }) => ({ id, label: t(`category_${id}`) }));
 
-function render(groups: CategoryFindings[], tabId: number): void {
+function showStatus(text: string, isError = false): void {
+  statusEl.textContent = text;
+  statusEl.className = isError ? "error" : "";
+}
+
+function resetResults(): void {
+  summaryEl.hidden = true;
+  clearEl.hidden = true;
   resultsEl.replaceChildren();
-  for (const group of groups) {
+  showStatus("");
+}
+
+function render(groups: CategoryFindings[], total: number, tabId: number): void {
+  const flagged = groups.filter((g) => g.findings.length > 0);
+  const clear = groups.filter((g) => g.findings.length === 0);
+  const markedClauses = new Set(flagged.flatMap((g) => g.findings.map((f) => f.clauseIndex)));
+
+  summaryEl.textContent =
+    markedClauses.size > 0
+      ? t("summaryFound", [String(total), String(markedClauses.size)])
+      : t("summaryNone", String(total));
+  summaryEl.hidden = false;
+
+  // 要注意を含むカテゴリを先に並べる
+  const highCount = (g: CategoryFindings) => g.findings.filter((f) => f.level === "high").length;
+  flagged.sort((a, b) => highCount(b) - highCount(a));
+
+  for (const group of flagged) {
     const section = document.createElement("section");
     const heading = document.createElement("h2");
-    const high = group.findings.filter((f) => f.level === "high").length;
-    const review = group.findings.length - high;
-    heading.textContent = group.label;
-    const summary = document.createElement("span");
-    summary.className = "summary";
-    summary.textContent =
-      group.findings.length === 0
-        ? t("noIssues")
-        : t("summaryCounts", [String(high), String(review)]);
-    heading.append(summary);
-    section.append(heading);
+    const label = document.createElement("span");
+    label.textContent = group.label;
+    const count = document.createElement("span");
+    count.className = "count";
+    count.textContent = String(group.findings.length);
+    heading.append(label, count);
 
     const list = document.createElement("ul");
     for (const finding of group.findings) {
-      const item = document.createElement("li");
       const button = document.createElement("button");
-      button.className = `finding ${finding.level}`;
-      const badge = document.createElement("span");
-      badge.className = "badge";
-      badge.textContent = `${t(finding.level === "high" ? "levelHigh" : "levelReview")} ${Math.round(finding.noul * 100)}%`;
-      const text = document.createElement("span");
-      text.className = "text";
-      text.textContent = finding.text;
-      button.append(badge, text);
+      button.className = `clause ${finding.level}`;
+
+      const verdict = document.createElement("span");
+      verdict.className = "verdict";
+      const level = document.createElement("span");
+      level.textContent = t(finding.level === "high" ? "levelHigh" : "levelReview");
+      const likelihood = document.createElement("span");
+      likelihood.className = "likelihood";
+      likelihood.textContent = `${Math.round(finding.noul * 100)}%`;
+      verdict.append(level, likelihood);
+
+      const quote = document.createElement("span");
+      quote.className = "quote";
+      quote.textContent = finding.text;
+
+      button.append(verdict, quote);
       button.addEventListener("click", () => {
         chrome.scripting.executeScript({
           target: { tabId },
@@ -48,11 +80,20 @@ function render(groups: CategoryFindings[], tabId: number): void {
           args: [finding.clauseIndex],
         });
       });
+      const item = document.createElement("li");
       item.append(button);
       list.append(item);
     }
-    section.append(list);
+    section.append(heading, list);
     resultsEl.append(section);
+  }
+
+  if (clear.length > 0) {
+    clearEl.textContent = t(
+      "nothingFoundFor",
+      clear.map((g) => g.label).join(t("listSeparator")),
+    );
+    clearEl.hidden = false;
   }
 }
 
@@ -60,7 +101,8 @@ async function analyze(): Promise<void> {
   const settings = await loadSettings();
   if (!settings) return;
   analyzeButton.disabled = true;
-  resultsEl.replaceChildren();
+  hintEl.hidden = true;
+  resetResults();
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     const tabId = tab.id!;
@@ -69,20 +111,25 @@ async function analyze(): Promise<void> {
       func: extractClauses,
     });
     if (!clauses || clauses.length === 0) {
-      statusEl.textContent = t("statusNoClauses");
+      showStatus(t("statusNoClauses"));
       return;
     }
 
-    const total = String(clauses.length);
-    statusEl.textContent = t("statusAnalyzing", ["0", total]);
+    const total = clauses.length;
+    progressEl.max = total;
+    progressEl.value = 0;
+    progressEl.hidden = false;
+    showStatus(t("statusAnalyzing", ["0", String(total)]));
     const results = await analyzeClauses(clauses, settings, (done) => {
-      statusEl.textContent = t("statusAnalyzing", [String(done), total]);
+      progressEl.value = done;
+      showStatus(t("statusAnalyzing", [String(done), String(total)]));
     });
-    statusEl.textContent = t("statusDone", total);
-    render(groupFindings(categories, clauses, results), tabId);
+    showStatus("");
+    render(groupFindings(categories, clauses, results), total, tabId);
   } catch (e) {
-    statusEl.textContent = errorMessage(e);
+    showStatus(errorMessage(e), true);
   } finally {
+    progressEl.hidden = true;
     analyzeButton.disabled = false;
   }
 }
@@ -94,5 +141,5 @@ for (const el of document.querySelectorAll(".open-settings")) {
 analyzeButton.addEventListener("click", analyze);
 loadSettings().then((settings) => {
   setupEl.hidden = settings !== null;
-  analyzeButton.hidden = settings === null;
+  startEl.hidden = settings === null;
 });
