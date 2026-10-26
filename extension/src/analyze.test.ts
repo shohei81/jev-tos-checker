@@ -1,18 +1,16 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { CATEGORIES } from "../../core/categories";
 import { AnalyzeError, analyzeClauses, mapWithConcurrency } from "./analyze";
 
 afterEach(() => vi.unstubAllGlobals());
 
-function jevResponse(noul: number): Response {
+function jevResponse(probability: number): Response {
   return Response.json({
     answers: Object.fromEntries(
-      [
-        "data_sharing",
-        "unilateral_change",
-        "liability_limitation",
-        "account_termination",
-        "dispute_resolution",
-      ].map((id) => [id, { type: "noul", noul }]),
+      CATEGORIES.map(({ id }) => [
+        id,
+        { type: "score", probabilities: { "0": 0, "1": 0, "2": 1 - probability, "3": probability } },
+      ]),
     ),
   });
 }

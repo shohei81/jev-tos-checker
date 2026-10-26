@@ -1,4 +1,4 @@
-import { judgeClause, type ClauseResult } from "../../core/jev";
+import { judgeClause, type ClauseInput, type ClauseResult } from "../../core/jev";
 
 export interface Env {
   TYPESAFE_API_KEY: string;
@@ -11,6 +11,20 @@ const MAX_CLAUSE_LENGTH = 4000;
 
 export interface AnalyzeResponse {
   results: ClauseResult[];
+}
+
+function isClauseInput(c: unknown): c is ClauseInput {
+  if (typeof c !== "object" || c === null) return false;
+  const { text, before, after } = c as Record<string, unknown>;
+  const optional = (v: unknown) =>
+    v === undefined || (typeof v === "string" && v.length <= MAX_CLAUSE_LENGTH);
+  return (
+    typeof text === "string" &&
+    text.length > 0 &&
+    text.length <= MAX_CLAUSE_LENGTH &&
+    optional(before) &&
+    optional(after)
+  );
 }
 
 function json(data: unknown, status = 200): Response {
@@ -37,13 +51,11 @@ export default {
       !Array.isArray(clauses) ||
       clauses.length === 0 ||
       clauses.length > MAX_CLAUSES_PER_REQUEST ||
-      !clauses.every(
-        (c) => typeof c === "string" && c.length > 0 && c.length <= MAX_CLAUSE_LENGTH,
-      )
+      !clauses.every(isClauseInput)
     ) {
       return json(
         {
-          error: `clauses must be 1-${MAX_CLAUSES_PER_REQUEST} non-empty strings of at most ${MAX_CLAUSE_LENGTH} chars`,
+          error: `clauses must be 1-${MAX_CLAUSES_PER_REQUEST} objects with a non-empty text, and optional before/after, each at most ${MAX_CLAUSE_LENGTH} chars`,
         },
         400,
       );
@@ -51,7 +63,9 @@ export default {
 
     try {
       const results = await Promise.all(
-        (clauses as string[]).map((c) => judgeClause(c, env.TYPESAFE_API_KEY, env.JEV_MODEL)),
+        (clauses as ClauseInput[]).map((c) =>
+          judgeClause(c, env.TYPESAFE_API_KEY, env.JEV_MODEL),
+        ),
       );
       const response: AnalyzeResponse = { results };
       return json(response);

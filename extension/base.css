@@ -1,4 +1,4 @@
-/* 紙・インク・赤ペン・黄土の4色で、規約を校閲しているような見た目にする */
+/* 紙・インク・赤ペンの配色で、規約を校閲しているような見た目にする */
 :root {
   color-scheme: light dark;
   --paper: #f7f8fa;
@@ -6,7 +6,6 @@
   --ink-muted: #5b6480;
   --rule: #dadfe8;
   --red-pen: #c62d3a;
-  --ochre: #b8860b;
   --ok: #2d6a4f;
 
   --font-ui: "Avenir Next", "Hiragino Sans", "Segoe UI Variable Text", "Yu Gothic UI", "Noto Sans JP", sans-serif;
@@ -20,7 +19,6 @@
     --ink-muted: #9aa3ba;
     --rule: #2a3247;
     --red-pen: #ff7380;
-    --ochre: #e0b84a;
     --ok: #74c69d;
   }
 }

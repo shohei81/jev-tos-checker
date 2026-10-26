@@ -40,9 +40,8 @@ function render(groups: CategoryFindings[], total: number, tabId: number): void 
       : t("summaryNone", String(total));
   summaryEl.hidden = false;
 
-  // 要注意を含むカテゴリを先に並べる
-  const highCount = (g: CategoryFindings) => g.findings.filter((f) => f.level === "high").length;
-  flagged.sort((a, b) => highCount(b) - highCount(a));
+  // 該当の多いカテゴリを先に並べる
+  flagged.sort((a, b) => b.findings.length - a.findings.length);
 
   for (const group of flagged) {
     const section = document.createElement("section");
@@ -57,15 +56,15 @@ function render(groups: CategoryFindings[], total: number, tabId: number): void 
     const list = document.createElement("ul");
     for (const finding of group.findings) {
       const button = document.createElement("button");
-      button.className = `clause ${finding.level}`;
+      button.className = "clause high";
 
       const verdict = document.createElement("span");
       verdict.className = "verdict";
       const level = document.createElement("span");
-      level.textContent = t(finding.level === "high" ? "levelHigh" : "levelReview");
+      level.textContent = t("levelHigh");
       const likelihood = document.createElement("span");
       likelihood.className = "likelihood";
-      likelihood.textContent = `${Math.round(finding.noul * 100)}%`;
+      likelihood.textContent = `${Math.round(finding.probability * 100)}%`;
       verdict.append(level, likelihood);
 
       const quote = document.createElement("span");
