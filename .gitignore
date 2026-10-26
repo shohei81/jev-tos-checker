@@ -3,3 +3,4 @@ extension/dist/
 .wrangler/
 .dev.vars
 jev-tos-checker.zip
+build/

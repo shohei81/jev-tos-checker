@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "esbuild extension/src/popup.ts extension/src/options.ts extension/src/background.ts --bundle --format=iife --target=chrome120 --outdir=extension/dist",
-    "package": "npm run build && cd extension && zip -r ../jev-tos-checker.zip manifest.json popup.html options.html _locales dist",
+    "package": "npm run build && rm -rf build jev-tos-checker.zip && mkdir -p build/jev-tos-checker && cp -R extension/manifest.json extension/popup.html extension/options.html extension/_locales extension/dist build/jev-tos-checker/ && cd build && zip -qr ../jev-tos-checker.zip jev-tos-checker",
     "dev:worker": "wrangler dev",
     "deploy:worker": "wrangler deploy",
     "typecheck": "tsc -p extension && tsc -p worker",

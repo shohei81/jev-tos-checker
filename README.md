@@ -1,63 +1,90 @@
-# jev-tos-checker
+# Jev ToS Checker
 
-閲覧中の利用規約を条項ごとに TypeSafe の [Jev](https://docs.typesafe.ai) で判定し、ユーザーに不利な可能性のある条項を原文つきで示す Chrome 拡張機能です。
-「このサイトは安全」と断定するものではなく、確認すべき条項を見つけるための補助ツールです。
+English | [日本語](README.ja.md)
 
-画面はブラウザの言語に合わせて日本語または英語で表示されます。解析する規約の言語は問いません。
+A Chrome extension that reads the terms of service on the page you are viewing and points out clauses that may work against you, using TypeSafe's [Jev](https://docs.typesafe.ai) model.
 
-## 使い方
+<p>
+  <img src="docs/images/popup-en.png" alt="Analysis results in the extension popup" width="380">
+</p>
 
-1. `jev-tos-checker.zip` を受け取り、展開します。
-2. Chrome で `chrome://extensions` を開き、右上の「デベロッパー モード」をオンにします。
-3. 「パッケージ化されていない拡張機能を読み込む」を押し、展開したフォルダを選びます。
-4. 設定画面が自動で開くので、次のどちらかを入力して「保存して接続を確認」を押します。
-   - **自分の APIキーを使う**: TypeSafe で発行した APIキー
-   - **解析サーバーを使う**: 管理者から案内されたサーバーの URL
-5. 利用規約のページを開き、ツールバーの拡張機能ボタンから「このページの規約を解析」を押します。
+## About
 
-結果の条項を押すと、ページ内の該当箇所までスクロールして赤枠で示します。設定はポップアップ右上の「設定」からいつでも変更できます。
+Terms of service are long, and the clauses that matter most are easy to miss. Jev ToS Checker splits a terms page into clauses and checks each one for five kinds of risk. It shows every match next to the original text, so you can judge it yourself.
 
-## 判定するカテゴリ
+- **Works on any site.** It analyzes the page in front of you on the spot, so it does not depend on a database of pre-reviewed services.
+- **Shows its evidence.** Click a result to scroll to that clause on the page and highlight it.
+- **Works in any language.** The extension's interface is in English or Japanese, following your browser. The terms you analyze can be in any language.
+- **Reads the page only when you ask.** The extension reads the page only when you click its button, and sends only the text of the clauses.
 
-各条項について、次の 5 つを Noul 質問として個別に判定します(`core/categories.ts`)。
+This tool helps you find clauses worth a closer look. It does not decide whether a service is "safe", and it is not legal advice.
 
-| カテゴリ | 内容 |
+### What it checks
+
+| Category | What it looks for |
 | --- | --- |
-| 個人情報 | データの第三者提供や目的外利用 |
-| 規約変更 | 事前通知のない一方的な変更 |
-| 責任制限 | 事業者の責任を広く免除する条項 |
-| アカウント | 不明確な理由による停止・削除 |
-| 紛争解決 | 強制仲裁や不利な裁判管轄 |
+| Personal data | Sharing your data with third parties or using it for other purposes |
+| Changes to the terms | Changing the terms without notifying you in advance |
+| Liability | The provider broadly excluding or limiting its liability |
+| Accounts | Suspending or deleting accounts without clear reasons |
+| Disputes | Mandatory arbitration, class action waivers, or venues that are unfavorable to you |
 
-Noul が 0.7 以上なら「要注意」、0.3 以上 0.7 未満なら「要確認」と表示します(`extension/src/classify.ts`)。
+Each clause gets a score from 0 to 1 per category. A score of 0.7 or higher is shown as **Caution**, and from 0.3 up to 0.7 as **Review**.
 
-## 構成
+## Installation
+
+The extension is not on the Chrome Web Store yet, so you install it from a downloaded folder. It takes about two minutes.
+
+1. **Download** [jev-tos-checker.zip](https://github.com/shohei81/jev-tos-checker/releases/latest/download/jev-tos-checker.zip) (the latest version from the [Releases](https://github.com/shohei81/jev-tos-checker/releases) page).
+2. **Unzip it.** You get a folder named `jev-tos-checker`. Move it somewhere you will keep it, such as your Documents folder. If you delete or move the folder later, the extension stops working.
+3. In Chrome, type `chrome://extensions` in the address bar and press Enter.
+4. Turn on **Developer mode** in the top-right corner.
+5. Click **Load unpacked** and select the `jev-tos-checker` folder from step 2.
+6. To keep the extension handy, click the puzzle-piece icon in the toolbar and pin **Jev ToS Checker**.
+
+### Set up a connection
+
+After installation, the settings page opens automatically. Choose one option and click **Save and test connection**.
+
+- **Use my own API key**: paste an API key from your TypeSafe account ([how to get one](https://docs.typesafe.ai/introduction/quickstart)). The key is stored only in your browser.
+- **Use an analysis server**: if someone runs a server for you, enter the URL they gave you.
+
+<p>
+  <img src="docs/images/options-en.png" alt="Connection settings page" width="480">
+</p>
+
+To change these settings later, open the extension and click **Settings** in the top-right corner.
+
+## Usage
+
+1. Open a terms of service or privacy policy page.
+2. Click the extension icon, then **Analyze terms on this page**.
+3. Results are grouped by category. Click a clause to jump to it on the page.
+
+## For developers
 
 ```
-core/       Jev への問い合わせとカテゴリ定義(拡張機能と Worker で共有)
-extension/  Chrome 拡張 (Manifest V3)
-worker/     解析サーバー (Cloudflare Worker)。APIキーを利用者に配らずに提供したい場合に使う
+core/       Jev requests and category definitions (shared by the extension and the server)
+extension/  Chrome extension (Manifest V3)
+worker/     Analysis server (Cloudflare Worker), for offering the extension without handing out an API key
 ```
-
-拡張機能はボタンを押したときだけページを読み取り(`activeTab`)、条項のテキストだけを送信します。
-APIキーを使う設定では Jev に直接、解析サーバーを使う設定では Worker 経由で問い合わせます。
-
-## 開発
 
 ```sh
 npm install
-npm run build      # extension/dist を生成
-npm run package    # 配布用の jev-tos-checker.zip を生成
+npm run build      # build extension/dist; load extension/ as an unpacked extension
+npm run package    # create jev-tos-checker.zip
 npm test
 npm run typecheck
 ```
 
-文言は `extension/_locales/{ja,en}/messages.json` にあります。言語を追加するときは同じキーを持つファイルを追加します。
+- The questions sent to Jev are in `core/categories.ts`, and the thresholds are in `extension/src/classify.ts`.
+- The UI text is in `extension/_locales/{en,ja}/messages.json`. To add a language, add a file with the same keys.
+- Pushing a `v*` tag runs `.github/workflows/release.yml`, which builds the zip and attaches it to a GitHub release.
 
-### 解析サーバー
+### Running the analysis server
 
 ```sh
-npm install-scripts approve workerd   # wrangler dev に必要
+npm install-scripts approve workerd   # required by wrangler dev
 echo 'TYPESAFE_API_KEY=<your key>' > .dev.vars
 npm run dev:worker                    # http://localhost:8787
 
@@ -65,4 +92,8 @@ npx wrangler secret put TYPESAFE_API_KEY
 npm run deploy:worker
 ```
 
-デプロイした URL を利用者に伝え、設定画面の「解析サーバーを使う」に入力してもらいます。
+The server has no access control yet. Anyone with the URL can use it, and their requests are billed to your API key.
+
+## License
+
+[MIT](LICENSE)
