@@ -34,26 +34,23 @@
   "levelHigh": {
     "message": "要注意"
   },
-  "levelReview": {
-    "message": "要確認"
-  },
   "disclaimer": {
     "message": "AI による自動判定です。法的助言ではありません。判定の確認には原文を参照してください。"
   },
   "category_data_sharing": {
-    "message": "個人情報の第三者提供・目的外利用"
+    "message": "個人情報の販売・無断提供"
   },
   "category_unilateral_change": {
-    "message": "一方的な規約変更"
+    "message": "予告のない規約変更"
   },
   "category_liability_limitation": {
-    "message": "事業者の広範な責任免除"
+    "message": "過度な責任免除"
   },
   "category_account_termination": {
-    "message": "不明確な理由によるアカウント停止・削除"
+    "message": "理由のないアカウント・データ削除"
   },
   "category_dispute_resolution": {
-    "message": "強制仲裁・不利な裁判管轄"
+    "message": "訴える権利の制限"
   },
   "optionsTitle": {
     "message": "接続設定"
@@ -126,7 +123,7 @@
     }
   },
   "startHint": {
-    "message": "利用規約やプライバシーポリシーのページで実行すると、よく読んでおきたい条項に印を付けます。"
+    "message": "利用規約やプライバシーポリシーのページで実行すると、悪質な可能性がある条項に印を付けます。一般的な内容の条項には印を付けません。"
   },
   "summaryFound": {
     "message": "$TOTAL$ 条項を読み、$COUNT$ 条項に印を付けました。",
@@ -157,5 +154,14 @@
   },
   "listSeparator": {
     "message": "、"
+  },
+  "category_auto_renewal": {
+    "message": "解約しにくい自動更新"
+  },
+  "category_content_rights": {
+    "message": "投稿コンテンツの権利の取り上げ"
+  },
+  "category_fees_and_charges": {
+    "message": "同意のない請求・値上げ"
   }
 }

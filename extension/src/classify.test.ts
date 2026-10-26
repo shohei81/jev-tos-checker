@@ -1,14 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { chunk, groupFindings, levelOf } from "./classify";
-
-describe("levelOf", () => {
-  it("しきい値で要注意・要確認・未検出に分ける", () => {
-    expect(levelOf(0.7)).toBe("high");
-    expect(levelOf(0.69)).toBe("review");
-    expect(levelOf(0.3)).toBe("review");
-    expect(levelOf(0.29)).toBeNull();
-  });
-});
+import { chunk, groupFindings } from "./classify";
 
 describe("chunk", () => {
   it("指定サイズで分割する", () => {
@@ -17,7 +8,7 @@ describe("chunk", () => {
 });
 
 describe("groupFindings", () => {
-  it("カテゴリごとに該当条項を Noul の高い順に並べる", () => {
+  it("しきい値以上の条項だけを、カテゴリごとに確率の高い順で並べる", () => {
     const groups = groupFindings(
       [
         { id: "a", label: "A" },
@@ -25,14 +16,14 @@ describe("groupFindings", () => {
       ],
       ["c0", "c1", "c2"],
       [
-        { a: 0.4, b: 0.1 },
-        { a: 0.9, b: 0.2 },
+        { a: 0.75, b: 0.1 },
+        { a: 0.9, b: 0.69 },
         { a: 0.1, b: 0.0 },
       ],
     );
     expect(groups[0].findings).toEqual([
-      { clauseIndex: 1, text: "c1", noul: 0.9, level: "high" },
-      { clauseIndex: 0, text: "c0", noul: 0.4, level: "review" },
+      { clauseIndex: 1, text: "c1", probability: 0.9 },
+      { clauseIndex: 0, text: "c0", probability: 0.75 },
     ]);
     expect(groups[1].findings).toEqual([]);
   });

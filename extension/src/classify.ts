@@ -1,8 +1,6 @@
-// Noul のしきい値(TypeSafe ドキュメントの推奨初期値)。評価データで調整する前提。
-export const HIGH_THRESHOLD = 0.7;
-export const REVIEW_THRESHOLD = 0.3;
-
-export type Level = "high" | "review";
+// 「悪質」である確率がこれ以上の条項だけに印を付ける。
+// 一般的な条項で利用者を不安にさせないよう、印は1段階にして高めに置く。評価データで調整する前提。
+export const THRESHOLD = 0.7;
 
 export interface Category {
   id: string;
@@ -12,18 +10,11 @@ export interface Category {
 export interface Finding {
   clauseIndex: number;
   text: string;
-  noul: number;
-  level: Level;
+  probability: number;
 }
 
 export interface CategoryFindings extends Category {
   findings: Finding[];
-}
-
-export function levelOf(noul: number): Level | null {
-  if (noul >= HIGH_THRESHOLD) return "high";
-  if (noul >= REVIEW_THRESHOLD) return "review";
-  return null;
 }
 
 export function chunk<T>(items: T[], size: number): T[][] {
@@ -32,7 +23,7 @@ export function chunk<T>(items: T[], size: number): T[][] {
   return out;
 }
 
-// results[i] は clauses[i] に対する各カテゴリの Noul 値
+// results[i] は clauses[i] に対する各カテゴリの確率
 export function groupFindings(
   categories: Category[],
   clauses: string[],
@@ -41,11 +32,12 @@ export function groupFindings(
   return categories.map((category) => {
     const findings: Finding[] = [];
     results.forEach((result, clauseIndex) => {
-      const noul = result[category.id];
-      const level = levelOf(noul);
-      if (level) findings.push({ clauseIndex, text: clauses[clauseIndex], noul, level });
+      const probability = result[category.id];
+      if (probability >= THRESHOLD) {
+        findings.push({ clauseIndex, text: clauses[clauseIndex], probability });
+      }
     });
-    findings.sort((a, b) => b.noul - a.noul);
+    findings.sort((a, b) => b.probability - a.probability);
     return { ...category, findings };
   });
 }

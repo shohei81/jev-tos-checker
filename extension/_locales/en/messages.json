@@ -34,26 +34,23 @@
   "levelHigh": {
     "message": "Caution"
   },
-  "levelReview": {
-    "message": "Review"
-  },
   "disclaimer": {
     "message": "Automated AI assessment, not legal advice. Check the original text to confirm each result."
   },
   "category_data_sharing": {
-    "message": "Sharing or secondary use of personal data"
+    "message": "Selling or handing over your personal data"
   },
   "category_unilateral_change": {
-    "message": "Unilateral changes to the terms"
+    "message": "Changing the terms without notice"
   },
   "category_liability_limitation": {
-    "message": "Broad limitation of the provider's liability"
+    "message": "Excessive exclusion of liability"
   },
   "category_account_termination": {
-    "message": "Account suspension or deletion without clear reason"
+    "message": "Deleting accounts or data for no reason"
   },
   "category_dispute_resolution": {
-    "message": "Mandatory arbitration or unfavorable jurisdiction"
+    "message": "Restricting your right to sue"
   },
   "optionsTitle": {
     "message": "Connection settings"
@@ -126,7 +123,7 @@
     }
   },
   "startHint": {
-    "message": "Run this on a terms of service or privacy policy page to mark the clauses worth a closer look."
+    "message": "Run this on a terms of service or privacy policy page to mark clauses that may be abusive. Clauses that are common across services are not marked."
   },
   "summaryFound": {
     "message": "Read $TOTAL$ clauses and marked $COUNT$.",
@@ -157,5 +154,14 @@
   },
   "listSeparator": {
     "message": ", "
+  },
+  "category_auto_renewal": {
+    "message": "Auto-renewal that is hard to cancel"
+  },
+  "category_content_rights": {
+    "message": "Taking over the rights to your content"
+  },
+  "category_fees_and_charges": {
+    "message": "Charges or price increases without consent"
   }
 }

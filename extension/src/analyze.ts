@@ -1,4 +1,4 @@
-import { judgeClause, JevError, type ClauseResult } from "../../core/jev";
+import { judgeClause, JevError, withContext, type ClauseInput, type ClauseResult } from "../../core/jev";
 import { chunk } from "./classify";
 import { t } from "./i18n";
 import type { Settings } from "./settings";
@@ -46,7 +46,7 @@ export async function mapWithConcurrency<T, R>(
   return results;
 }
 
-async function judgeDirect(clause: string, apiKey: string): Promise<ClauseResult> {
+async function judgeDirect(clause: ClauseInput, apiKey: string): Promise<ClauseResult> {
   try {
     return await judgeClause(clause, apiKey);
   } catch (e) {
@@ -59,7 +59,7 @@ async function judgeDirect(clause: string, apiKey: string): Promise<ClauseResult
   }
 }
 
-async function analyzeOnServer(serverUrl: string, clauses: string[]): Promise<ClauseResult[]> {
+async function analyzeOnServer(serverUrl: string, clauses: ClauseInput[]): Promise<ClauseResult[]> {
   let res: Response;
   try {
     res = await fetch(new URL("/analyze", serverUrl), {
@@ -79,17 +79,18 @@ export async function analyzeClauses(
   settings: Settings,
   onProgress: (done: number) => void,
 ): Promise<ClauseResult[]> {
+  const inputs = withContext(clauses);
   if (settings.mode === "apiKey") {
     let done = 0;
     return mapWithConcurrency(
-      clauses,
+      inputs,
       DIRECT_CONCURRENCY,
       (c) => judgeDirect(c, settings.apiKey),
       () => onProgress(++done),
     );
   }
   const results: ClauseResult[] = [];
-  for (const part of chunk(clauses, CLAUSES_PER_REQUEST)) {
+  for (const part of chunk(inputs, CLAUSES_PER_REQUEST)) {
     results.push(...(await analyzeOnServer(settings.serverUrl, part)));
     onProgress(results.length);
   }
