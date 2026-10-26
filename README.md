@@ -1,6 +1,6 @@
 # Jev ToS Checker
 
-English | [日本語](README.ja.md)
+English | [日本語](README.ja.md) | [Website](https://shohei81.github.io/jev-tos-checker/)
 
 A Chrome extension that reads the terms of service on the page you are viewing and points out clauses that may work against you, using TypeSafe's [Jev](https://docs.typesafe.ai) model.
 
@@ -53,7 +53,7 @@ After installation, the settings page opens automatically. Choose one option and
   <img src="docs/images/options-en.png" alt="Connection settings page" width="480">
 </p>
 
-To change these settings later, open the extension and click **Settings** in the top-right corner.
+To change these settings later, open the extension and click the gear icon in the top-right corner.
 
 ## Usage
 

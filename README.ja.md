@@ -1,6 +1,6 @@
 # Jev ToS Checker
 
-[English](README.md) | 日本語
+[English](README.md) | 日本語 | [Web サイト](https://shohei81.github.io/jev-tos-checker/ja/)
 
 閲覧中のページの利用規約を読み取り、あなたにとって不利になりうる条項を TypeSafe の [Jev](https://docs.typesafe.ai) モデルで見つけて示す Chrome 拡張機能です。
 
@@ -53,7 +53,7 @@
   <img src="docs/images/options-ja.png" alt="接続設定の画面" width="480">
 </p>
 
-あとから設定を変えるときは、拡張機能を開いて右上の **設定** を押します。
+あとから設定を変えるときは、拡張機能を開いて右上の歯車のアイコンを押します。
 
 ## 使い方
 

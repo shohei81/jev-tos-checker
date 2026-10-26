@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jev ToS Checker</title>
+    <meta name="description" content="利用規約に含まれる、あなたに不利になりうる条項に印を付ける Chrome 拡張機能です。" />
+    <link rel="alternate" hreflang="en" href="../" />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <header class="wrap site-header">
+      <a class="site-name" href="./">Jev ToS Checker</a>
+      <nav class="site-nav">
+        <a class="optional" href="#install">インストール</a>
+        <a href="https://github.com/shohei81/jev-tos-checker">GitHub</a>
+        <a href="../" hreflang="en" lang="en">English</a>
+      </nav>
+    </header>
+
+    <div class="wrap hero">
+      <h1>利用規約の、あなたに不利な条項を見つける。</h1>
+      <p class="lead">Jev ToS Checker は Chrome 拡張機能です。開いている規約のページを読み取り、よく読んでおきたい条項に TypeSafe の Jev モデルで印を付けます。</p>
+      <div class="actions">
+        <a class="button" href="https://github.com/shohei81/jev-tos-checker/releases/latest/download/jev-tos-checker.zip">Chrome 版をダウンロード</a>
+        <a href="#install">インストール手順</a>
+      </div>
+
+      <figure class="specimen">
+        <p class="specimen-title">利用規約</p>
+        <p class="clause high"><span><span class="verdict">要注意</span>当社は、利用者の個人情報をマーケティングの目的で広告提携先に提供することがあります。</span></p>
+        <p class="clause high"><span><span class="verdict">要注意</span>当社は、事前の通知なくいつでも本規約を変更できるものとします。</span></p>
+        <p class="clause review"><span><span class="verdict">要確認</span>法令で認められる最大限の範囲で、当社は間接損害および派生的損害について責任を負いません。</span></p>
+        <p class="clause plain"><span>本規約は、利用者の居住国の法令に準拠します。</span></p>
+        <figcaption class="specimen-caption">印の付き方の例です。説明のために作った条文です。</figcaption>
+      </figure>
+    </div>
+
+    <main class="wrap">
+      <section id="about">
+        <h2>できること</h2>
+        <p>利用規約は長く、大事な条項ほど見落としがちです。この拡張機能は規約のページを条項ごとに分け、5種類のリスクについて1つずつ判定します。該当した条項は原文と一緒に表示するので、最終的な判断はご自身で行えます。</p>
+        <ul class="categories">
+          <li><strong>個人情報</strong><span>データの第三者提供や目的外利用</span></li>
+          <li><strong>規約変更</strong><span>事前の通知なく規約を変更できる条項</span></li>
+          <li><strong>責任制限</strong><span>事業者の責任を広く免除・制限する条項</span></li>
+          <li><strong>アカウント</strong><span>明確な理由なくアカウントを停止・削除できる条項</span></li>
+          <li><strong>紛争解決</strong><span>強制仲裁、集団訴訟の放棄、利用者に不利な裁判管轄</span></li>
+        </ul>
+        <ul class="marks">
+          <li><span class="glyph high" aria-hidden="true">!</span><span><strong>要注意</strong>は、そのリスクを含む可能性が高い条項です。</span></li>
+          <li><span class="glyph review" aria-hidden="true">?</span><span><strong>要確認</strong>は、含む可能性がある条項です。原文を読んで判断してください。</span></li>
+        </ul>
+        <p class="muted">どのサイトでも、どの言語の規約でも使えます。拡張機能の画面は、ブラウザの言語に合わせて日本語か英語で表示されます。</p>
+      </section>
+
+      <section id="install">
+        <h2>インストール</h2>
+        <p>まだ Chrome ウェブストアには公開していないため、ダウンロードしたフォルダから読み込みます。2分ほどで終わります。</p>
+        <ol class="steps">
+          <li><a href="https://github.com/shohei81/jev-tos-checker/releases/latest/download/jev-tos-checker.zip">jev-tos-checker.zip</a> を<strong>ダウンロード</strong>します。</li>
+          <li><strong>zip を展開</strong>すると <code>jev-tos-checker</code> フォルダができます。書類フォルダなど、残しておく場所に移してください。あとでフォルダを削除・移動すると拡張機能が動かなくなります。</li>
+          <li>Chrome のアドレスバーに <code>chrome://extensions</code> と入力して Enter を押します。</li>
+          <li>右上の <strong>デベロッパー モード</strong> をオンにします。</li>
+          <li><strong>パッケージ化されていない拡張機能を読み込む</strong> を押し、<code>jev-tos-checker</code> フォルダを選びます。</li>
+          <li>ツールバーのパズルのアイコンから <strong>Jev ToS Checker</strong> をピン留めしておくと、すぐに使えます。</li>
+        </ol>
+      </section>
+
+      <section id="setup">
+        <h2>接続の設定</h2>
+        <p>インストールすると設定画面が自動で開きます。どちらかを選んで <strong>保存して接続を確認</strong> を押してください。保存する前に、接続できるかを確認します。</p>
+        <ul class="options">
+          <li><strong>自分の APIキーを使う</strong>TypeSafe のアカウントで発行した APIキーを貼り付けます(<a href="https://docs.typesafe.ai/introduction/quickstart">取得方法</a>)。キーはこのブラウザ内にだけ保存されます。</li>
+          <li><strong>解析サーバーを使う</strong>解析サーバーを用意してくれた人がいる場合は、案内された URL を入力します。APIキーは要りません。</li>
+        </ul>
+        <figure>
+          <img src="../images/options-ja.png" alt="APIキーか解析サーバーかを選ぶ接続設定の画面" width="640" height="596" loading="lazy" />
+          <figcaption>あとから設定を変えるときは、拡張機能を開いて歯車のアイコンを押します。</figcaption>
+        </figure>
+      </section>
+
+      <section id="usage">
+        <h2>使い方</h2>
+        <ol class="steps">
+          <li>利用規約やプライバシーポリシーのページを開きます。</li>
+          <li>拡張機能のアイコンを押し、<strong>このページの規約を解析</strong> を押します。</li>
+          <li>結果はカテゴリごとにまとめて表示されます。条項を押すと、ページ内のその箇所に移動します。</li>
+        </ol>
+        <figure>
+          <img src="../images/popup-ja.png" alt="カテゴリごとにまとめられた、拡張機能のポップアップの解析結果" width="404" height="662" loading="lazy" />
+          <figcaption>解析結果の例です。</figcaption>
+        </figure>
+      </section>
+
+      <section id="update">
+        <h2>新しいバージョンへの更新</h2>
+        <ol class="steps">
+          <li>最新の <a href="https://github.com/shohei81/jev-tos-checker/releases/latest/download/jev-tos-checker.zip">jev-tos-checker.zip</a> をダウンロードして展開します。</li>
+          <li>今ある <code>jev-tos-checker</code> フォルダを、新しいフォルダで置き換えます。</li>
+          <li><code>chrome://extensions</code> を開き、Jev ToS Checker の再読み込みアイコンを押します。</li>
+        </ol>
+        <p class="muted">設定はそのまま引き継がれます。各バージョンの変更点は <a href="https://github.com/shohei81/jev-tos-checker/releases">Releases</a> ページで確認できます。</p>
+      </section>
+
+      <section id="privacy">
+        <h2>プライバシーと注意点</h2>
+        <p>ページを読み取るのはボタンを押したときだけです。送信するのは条項のテキストだけで、送信先は TypeSafe か、設定した解析サーバーです。裏で勝手に送信することはありません。</p>
+        <p>結果は AI による自動判定で、法的助言ではありません。見落としや、問題のない条項に印を付けることもあるので、必ず原文を確認してください。条項が段落や箇条書きで分かれているページで最もよく動きます。</p>
+      </section>
+    </main>
+
+    <footer class="wrap site-footer">
+      <p><a href="https://github.com/shohei81/jev-tos-checker/blob/main/LICENSE">MIT ライセンス</a>で公開しています。ソースコードと不具合の報告は <a href="https://github.com/shohei81/jev-tos-checker">GitHub</a> へ。</p>
+    </footer>
+  </body>
+</html>

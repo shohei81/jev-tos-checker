@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jev ToS Checker</title>
+    <meta name="description" content="A Chrome extension that marks the clauses in terms of service that may work against you." />
+    <link rel="alternate" hreflang="ja" href="ja/" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="wrap site-header">
+      <a class="site-name" href="./">Jev ToS Checker</a>
+      <nav class="site-nav">
+        <a class="optional" href="#install">Install</a>
+        <a href="https://github.com/shohei81/jev-tos-checker">GitHub</a>
+        <a href="ja/" hreflang="ja" lang="ja">日本語</a>
+      </nav>
+    </header>
+
+    <div class="wrap hero">
+      <h1>Find the clauses in terms of service that work against you.</h1>
+      <p class="lead">Jev ToS Checker is a Chrome extension. It reads the terms page you have open and marks the clauses worth a closer look, using TypeSafe's Jev model.</p>
+      <div class="actions">
+        <a class="button" href="https://github.com/shohei81/jev-tos-checker/releases/latest/download/jev-tos-checker.zip">Download for Chrome</a>
+        <a href="#install">Installation guide</a>
+      </div>
+
+      <figure class="specimen">
+        <p class="specimen-title">Terms of Service</p>
+        <p class="clause high"><span><span class="verdict">Caution</span>We may share your personal information with our advertising partners for marketing purposes.</span></p>
+        <p class="clause high"><span><span class="verdict">Caution</span>We reserve the right to modify these terms at any time without notice.</span></p>
+        <p class="clause review"><span><span class="verdict">Review</span>To the fullest extent permitted by law, we are not liable for any indirect or consequential damages.</span></p>
+        <p class="clause plain"><span>These terms are governed by the laws of the country where you reside.</span></p>
+        <figcaption class="specimen-caption">An example of how clauses are marked. These clauses are made up for illustration.</figcaption>
+      </figure>
+    </div>
+
+    <main class="wrap">
+      <section id="about">
+        <h2>What it does</h2>
+        <p>Terms of service are long, and the clauses that matter most are easy to miss. The extension splits a terms page into clauses and checks each one for five kinds of risk. Every match is shown with its original text, so you can judge it yourself.</p>
+        <ul class="categories">
+          <li><strong>Personal data</strong><span>Sharing your data with third parties or using it for other purposes</span></li>
+          <li><strong>Changes to the terms</strong><span>Changing the terms without telling you in advance</span></li>
+          <li><strong>Liability</strong><span>The provider broadly excluding or limiting its liability</span></li>
+          <li><strong>Accounts</strong><span>Suspending or deleting accounts without clear reasons</span></li>
+          <li><strong>Disputes</strong><span>Mandatory arbitration, class action waivers, or courts that are unfavorable to you</span></li>
+        </ul>
+        <ul class="marks">
+          <li><span class="glyph high" aria-hidden="true">!</span><span><strong>Caution</strong> means the clause very likely includes the risk.</span></li>
+          <li><span class="glyph review" aria-hidden="true">?</span><span><strong>Review</strong> means it might. Read the clause and decide.</span></li>
+        </ul>
+        <p class="muted">It works on any site and with terms in any language. The extension itself is shown in English or Japanese, following your browser.</p>
+      </section>
+
+      <section id="install">
+        <h2>Install</h2>
+        <p>The extension is not on the Chrome Web Store yet, so you install it from a downloaded folder. It takes about two minutes.</p>
+        <ol class="steps">
+          <li><strong>Download</strong> <a href="https://github.com/shohei81/jev-tos-checker/releases/latest/download/jev-tos-checker.zip">jev-tos-checker.zip</a>.</li>
+          <li><strong>Unzip it.</strong> You get a folder named <code>jev-tos-checker</code>. Move it somewhere you will keep it, such as your Documents folder. If you delete or move the folder later, the extension stops working.</li>
+          <li>In Chrome, type <code>chrome://extensions</code> in the address bar and press Enter.</li>
+          <li>Turn on <strong>Developer mode</strong> in the top-right corner.</li>
+          <li>Click <strong>Load unpacked</strong> and select the <code>jev-tos-checker</code> folder.</li>
+          <li>Click the puzzle-piece icon in the toolbar and pin <strong>Jev ToS Checker</strong> so it is always within reach.</li>
+        </ol>
+      </section>
+
+      <section id="setup">
+        <h2>Set up a connection</h2>
+        <p>After installation, the settings page opens automatically. Choose one option and click <strong>Save and test connection</strong>. The extension checks the connection before saving.</p>
+        <ul class="options">
+          <li><strong>Use my own API key</strong>Paste an API key from your TypeSafe account (<a href="https://docs.typesafe.ai/introduction/quickstart">how to get one</a>). The key is stored only in your browser.</li>
+          <li><strong>Use an analysis server</strong>If someone runs a server for you, enter the URL they gave you. You do not need an API key.</li>
+        </ul>
+        <figure>
+          <img src="images/options-en.png" alt="The connection settings page, with options for an API key or an analysis server" width="640" height="596" loading="lazy" />
+          <figcaption>To change these settings later, open the extension and click the gear icon.</figcaption>
+        </figure>
+      </section>
+
+      <section id="usage">
+        <h2>Use it</h2>
+        <ol class="steps">
+          <li>Open a terms of service or privacy policy page.</li>
+          <li>Click the extension icon, then <strong>Analyze terms on this page</strong>.</li>
+          <li>Results are grouped by category. Click a clause to scroll to it on the page.</li>
+        </ol>
+        <figure>
+          <img src="images/popup-en.png" alt="Analysis results in the extension popup, grouped by category" width="404" height="662" loading="lazy" />
+          <figcaption>An example of the results.</figcaption>
+        </figure>
+      </section>
+
+      <section id="update">
+        <h2>Update to a new version</h2>
+        <ol class="steps">
+          <li>Download the latest <a href="https://github.com/shohei81/jev-tos-checker/releases/latest/download/jev-tos-checker.zip">jev-tos-checker.zip</a> and unzip it.</li>
+          <li>Replace your existing <code>jev-tos-checker</code> folder with the new one.</li>
+          <li>Open <code>chrome://extensions</code> and click the reload icon on Jev ToS Checker.</li>
+        </ol>
+        <p class="muted">Your settings are kept. You can find what changed in each version on the <a href="https://github.com/shohei81/jev-tos-checker/releases">Releases</a> page.</p>
+      </section>
+
+      <section id="privacy">
+        <h2>Privacy and limits</h2>
+        <p>The extension reads a page only when you click its button, and sends only the text of the clauses, either to TypeSafe or to the analysis server you set up. Nothing is sent in the background.</p>
+        <p>Results are an automated assessment, not legal advice. The extension can miss clauses or mark ones that are fine, so always read the original text. It works best on pages where each clause is its own paragraph or list item.</p>
+      </section>
+    </main>
+
+    <footer class="wrap site-footer">
+      <p>Released under the <a href="https://github.com/shohei81/jev-tos-checker/blob/main/LICENSE">MIT License</a>. Source code and issues are on <a href="https://github.com/shohei81/jev-tos-checker">GitHub</a>.</p>
+    </footer>
+  </body>
+</html>
