@@ -44,7 +44,7 @@
 
 ### ダウンロードしたファイルの確認(任意)
 
-リリースのファイルはこのリポジトリの GitHub Actions で作られ、GitHub がビルドごとに署名付きの記録を残しています。公開後のリリースは変更できません。[GitHub CLI](https://cli.github.com) を使っている場合は、zip がこのリポジトリで作られ、改ざんされていないことを確認できます。
+リリースのファイルはこのリポジトリの GitHub Actions で作られ、GitHub がビルドごとに署名付きの記録を残しています。[GitHub CLI](https://cli.github.com) を使っている場合は、zip がこのリポジトリで作られ、改ざんされていないことを確認できます。
 
 ```sh
 gh attestation verify jev-tos-checker.zip --repo shohei81/jev-tos-checker

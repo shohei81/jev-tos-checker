@@ -44,7 +44,7 @@ The extension is not on the Chrome Web Store yet, so you install it from a downl
 
 ### Check that the download is genuine (optional)
 
-Release files are built by GitHub Actions in this repository, and GitHub keeps a signed record of each build. Releases cannot be changed after they are published. If you use the [GitHub CLI](https://cli.github.com), you can confirm that your zip came from this repository and has not been modified:
+Release files are built by GitHub Actions in this repository, and GitHub keeps a signed record of each build. If you use the [GitHub CLI](https://cli.github.com), you can confirm that your zip came from this repository and has not been modified:
 
 ```sh
 gh attestation verify jev-tos-checker.zip --repo shohei81/jev-tos-checker
