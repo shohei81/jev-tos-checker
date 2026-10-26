@@ -1,0 +1,21 @@
+{
+  "name": "jev-tos-checker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild extension/src/popup.ts extension/src/options.ts extension/src/background.ts --bundle --format=iife --target=chrome120 --outdir=extension/dist",
+    "package": "npm run build && cd extension && zip -r ../jev-tos-checker.zip manifest.json popup.html options.html _locales dist",
+    "dev:worker": "wrangler dev",
+    "deploy:worker": "wrangler deploy",
+    "typecheck": "tsc -p extension && tsc -p worker",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261026.1",
+    "@types/chrome": "^0.3.6",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5",
+    "wrangler": "^4.152.0"
+  }
+}

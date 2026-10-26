@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Jev ToS Checker</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #ffffff;
+        --fg: #1c1c1e;
+        --muted: #6b6b70;
+        --border: #e2e2e6;
+        --high: #d93036;
+        --high-bg: #fdecec;
+        --review: #a35c00;
+        --review-bg: #fff4e0;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1c1c1e;
+          --fg: #f2f2f5;
+          --muted: #a0a0a8;
+          --border: #3a3a3e;
+          --high: #ff6b6f;
+          --high-bg: #3d1f20;
+          --review: #ffb74d;
+          --review-bg: #3a2c15;
+        }
+      }
+      body {
+        width: 380px;
+        margin: 0;
+        padding: 12px;
+        font: 13px/1.5 system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+      }
+      header { display: flex; justify-content: space-between; align-items: baseline; }
+      h1 { font-size: 15px; margin: 0 0 8px; }
+      .link {
+        padding: 0;
+        font: inherit;
+        color: var(--muted);
+        background: none;
+        border: 0;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      #setup p { margin: 0 0 8px; }
+      #analyze, #setup .open-settings {
+        width: 100%;
+        padding: 8px;
+        font: inherit;
+        font-weight: 600;
+        border: 0;
+        border-radius: 6px;
+        background: var(--fg);
+        color: var(--bg);
+        cursor: pointer;
+      }
+      [hidden] { display: none !important; }
+      #analyze:disabled { opacity: 0.5; cursor: progress; }
+      #status { color: var(--muted); margin: 8px 0; }
+      section { border-top: 1px solid var(--border); padding: 8px 0; }
+      h2 {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 13px;
+        margin: 0 0 4px;
+      }
+      .summary { font-weight: normal; color: var(--muted); white-space: nowrap; }
+      ul { list-style: none; margin: 0; padding: 0; }
+      .finding {
+        display: block;
+        width: 100%;
+        margin: 4px 0;
+        padding: 6px 8px;
+        text-align: left;
+        font: inherit;
+        color: inherit;
+        border: 0;
+        border-left: 3px solid;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .finding.high { background: var(--high-bg); border-color: var(--high); }
+      .finding.review { background: var(--review-bg); border-color: var(--review); }
+      .badge { display: block; font-size: 11px; font-weight: 600; }
+      .high .badge { color: var(--high); }
+      .review .badge { color: var(--review); }
+      .text {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      footer { color: var(--muted); font-size: 11px; margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 data-i18n="extName"></h1>
+      <button class="link open-settings" data-i18n="settingsLink"></button>
+    </header>
+    <div id="setup" hidden>
+      <p data-i18n="notConfigured"></p>
+      <button class="open-settings" data-i18n="openSettings"></button>
+    </div>
+    <button id="analyze" data-i18n="analyzeButton" hidden></button>
+    <p id="status"></p>
+    <div id="results"></div>
+    <footer data-i18n="disclaimer"></footer>
+    <script src="dist/popup.js"></script>
+  </body>
+</html>

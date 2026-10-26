@@ -1,0 +1,7 @@
+{
+  "name": "jev-tos-checker",
+  "main": "worker/src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "vars": { "JEV_MODEL": "jev-latest" }
+  // APIキーは `wrangler secret put TYPESAFE_API_KEY`(ローカルは .dev.vars)で設定する
+}

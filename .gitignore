@@ -1,0 +1,5 @@
+node_modules/
+extension/dist/
+.wrangler/
+.dev.vars
+jev-tos-checker.zip

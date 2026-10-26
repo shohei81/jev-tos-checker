@@ -1,0 +1,150 @@
+{
+  "extName": {
+    "message": "Jev ToS Checker"
+  },
+  "extDescription": {
+    "message": "Uses Jev to find clauses in terms of service that may be unfavorable to users"
+  },
+  "analyzeButton": {
+    "message": "Analyze terms on this page"
+  },
+  "statusNoClauses": {
+    "message": "No clauses found on this page"
+  },
+  "statusAnalyzing": {
+    "message": "Analyzing… $DONE$ / $TOTAL$ clauses",
+    "placeholders": {
+      "done": {
+        "content": "$1"
+      },
+      "total": {
+        "content": "$2"
+      }
+    }
+  },
+  "statusDone": {
+    "message": "Analyzed $COUNT$ clauses",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "notConfigured": {
+    "message": "Set up a connection first."
+  },
+  "openSettings": {
+    "message": "Open settings"
+  },
+  "settingsLink": {
+    "message": "Settings"
+  },
+  "levelHigh": {
+    "message": "Caution"
+  },
+  "levelReview": {
+    "message": "Review"
+  },
+  "noIssues": {
+    "message": "No issues found"
+  },
+  "summaryCounts": {
+    "message": "Caution $HIGH$ / Review $REVIEW$",
+    "placeholders": {
+      "high": {
+        "content": "$1"
+      },
+      "review": {
+        "content": "$2"
+      }
+    }
+  },
+  "disclaimer": {
+    "message": "Automated AI assessment, not legal advice. Check the original text to confirm each result."
+  },
+  "category_data_sharing": {
+    "message": "Sharing or secondary use of personal data"
+  },
+  "category_unilateral_change": {
+    "message": "Unilateral changes to the terms"
+  },
+  "category_liability_limitation": {
+    "message": "Broad limitation of the provider's liability"
+  },
+  "category_account_termination": {
+    "message": "Account suspension or deletion without clear reason"
+  },
+  "category_dispute_resolution": {
+    "message": "Mandatory arbitration or unfavorable jurisdiction"
+  },
+  "optionsTitle": {
+    "message": "Connection settings"
+  },
+  "optionsIntro": {
+    "message": "This extension uses TypeSafe's Jev to analyze terms. Choose one of the options below."
+  },
+  "modeApiKey": {
+    "message": "Use my own API key"
+  },
+  "modeApiKeyHelp": {
+    "message": "Enter an API key issued from your TypeSafe account. The key is stored only in this browser."
+  },
+  "getApiKeyLink": {
+    "message": "How to get an API key"
+  },
+  "apiKeyLabel": {
+    "message": "API key"
+  },
+  "modeServer": {
+    "message": "Use an analysis server"
+  },
+  "modeServerHelp": {
+    "message": "Choose this if an administrator gave you an analysis server URL."
+  },
+  "serverUrlLabel": {
+    "message": "Server URL"
+  },
+  "privacyNote": {
+    "message": "When you analyze a page, only the text of its clauses is sent."
+  },
+  "saveButton": {
+    "message": "Save and test connection"
+  },
+  "saving": {
+    "message": "Testing connection…"
+  },
+  "saved": {
+    "message": "Saved. Click the extension button on a terms page to analyze it."
+  },
+  "errorEmpty": {
+    "message": "Please fill in this field."
+  },
+  "errorInvalidUrl": {
+    "message": "This URL is not valid."
+  },
+  "errorPermissionDenied": {
+    "message": "Access to the server was not allowed."
+  },
+  "errorInvalidApiKey": {
+    "message": "The API key seems to be invalid. Check your settings."
+  },
+  "errorServer": {
+    "message": "The server returned an error ($STATUS$). Please try again later.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "errorNetwork": {
+    "message": "Could not connect. Check your network and settings."
+  },
+  "errorUnknown": {
+    "message": "An error occurred: $DETAIL$",
+    "placeholders": {
+      "detail": {
+        "content": "$1"
+      }
+    }
+  }
+}
