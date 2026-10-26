@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # ワークフローの action はコミット SHA で固定しているので、更新は Dependabot に任せる
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      dev-dependencies:
+        dependency-type: development
