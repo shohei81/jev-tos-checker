@@ -10,7 +10,7 @@ A Chrome extension that reads the terms of service on the page you are viewing a
 
 ## About
 
-Terms of service are long, and the clauses that matter most are easy to miss. Jev ToS Checker splits a terms page into clauses and checks each one for five kinds of risk. It shows every match next to the original text, so you can judge it yourself.
+Terms of service are long, and an abusive clause is easy to miss. Jev ToS Checker splits a terms page into clauses and checks each one for eight kinds of abusive terms. It marks only clauses that go well beyond what is common among major services, so it does not alarm you about ordinary terms. Every match is shown next to the original text, so you can judge it yourself.
 
 - **Works on any site.** It analyzes the page in front of you on the spot, so it does not depend on a database of pre-reviewed services.
 - **Shows its evidence.** Click a result to scroll to that clause on the page and highlight it.
@@ -21,15 +21,18 @@ This tool helps you find clauses worth a closer look. It does not decide whether
 
 ### What it checks
 
-| Category | What it looks for |
-| --- | --- |
-| Personal data | Sharing your data with third parties or using it for other purposes |
-| Changes to the terms | Changing the terms without notifying you in advance |
-| Liability | The provider broadly excluding or limiting its liability |
-| Accounts | Suspending or deleting accounts without clear reasons |
-| Disputes | Mandatory arbitration, class action waivers, or venues that are unfavorable to you |
+| Category | Marked, for example | Not marked, for example |
+| --- | --- | --- |
+| Personal data | Selling your data or giving it to third parties without consent | Sharing with vendors that work for the service, or when the law requires it |
+| Changes to the terms | Changing the terms with no notice, or retroactively | Changes announced in advance |
+| Liability | No liability even for the provider's intentional misconduct | Capping liability at the fees you paid |
+| Accounts | Deleting your account and data for no reason, keeping your balance | Suspending accounts for serious violations, with notice |
+| Disputes | Forced arbitration, class action waivers, banning lawsuits | The provider's home courts, while your local courts stay available |
+| Auto-renewal | Cancellation only by mail, or cancellation penalties | Renewal you can cancel online at any time |
+| Your content | Taking ownership of your content, or the right to sell it | A license only to run and improve the service |
+| Fees | Charging you or raising prices without consent or notice | Price changes announced in advance, with the option to cancel |
 
-Each clause gets a score from 0 to 1 per category. A score of 0.7 or higher is shown as **Caution**, and from 0.3 up to 0.7 as **Review**.
+Each clause is judged together with the paragraphs around it, so an exception in the next paragraph is taken into account. A clause is marked as **Caution** when the probability that it is abusive is 70% or higher.
 
 ## Installation
 
